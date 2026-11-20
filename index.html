@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X Code — Web Developer Challenge Platform</title>
+    <meta name="description" content="X Code - Master Web Development with 500+ Coding Challenges. Built by SHADOW.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- CodeMirror Editor -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ============ LOADER ============ -->
+    <div id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <span class="loader-x">X</span>
+                <span class="loader-code">CODE</span>
+            </div>
+            <div class="loader-bar"><div class="loader-progress"></div></div>
+            <p class="loader-text">Loading 500 Challenges...</p>
+        </div>
+    </div>
+
+    <!-- ============ NAVBAR ============ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo" onclick="navigateTo('home')">
+                <span class="logo-x">X</span><span class="logo-code">CODE</span>
+            </a>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" onclick="navigateTo('home')" data-page="home">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="#" class="nav-link" onclick="navigateTo('problems')" data-page="problems">
+                    <i class="fas fa-code"></i> Problems
+                </a>
+                <a href="#" class="nav-link" onclick="navigateTo('leaderboard')" data-page="leaderboard">
+                    <i class="fas fa-trophy"></i> Leaderboard
+                </a>
+                <a href="#" class="nav-link" onclick="navigateTo('about')" data-page="about">
+                    <i class="fas fa-info-circle"></i> About
+                </a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-theme" onclick="toggleTheme()" title="Toggle Theme">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <!-- AUTH AREA — dynamically updated -->
+                <div id="nav-auth-area">
+                    <button class="btn-outline nav-btn" onclick="showAuthModal('login')">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
+                    <button class="btn-primary nav-btn" onclick="showAuthModal('signup')">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </button>
+                </div>
+            </div>
+            <button class="nav-hamburger" onclick="toggleMobileMenu()">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ============ MOBILE MENU ============ -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#" onclick="navigateTo('home'); toggleMobileMenu()">Home</a>
+        <a href="#" onclick="navigateTo('problems'); toggleMobileMenu()">Problems</a>
+        <a href="#" onclick="navigateTo('leaderboard'); toggleMobileMenu()">Leaderboard</a>
+        <a href="#" onclick="navigateTo('about'); toggleMobileMenu()">About</a>
+    </div>
+
+    <!-- ============ MAIN CONTENT ============ -->
+    <main id="main-content">
+
+        <!-- ====== HOME PAGE ====== -->
+        <section id="page-home" class="page active">
+            <!-- Hero Section -->
+            <div class="hero">
+                <div class="hero-particles" id="particles"></div>
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <i class="fas fa-bolt"></i> #1 Web Developer Platform
+                    </div>
+                    <h1 class="hero-title">
+                        Master <span class="gradient-text">Web Development</span><br>
+                        One Challenge at a Time
+                    </h1>
+                    <p class="hero-subtitle">
+                        500+ hand-crafted coding challenges across HTML, CSS & JavaScript. 
+                        From beginner fundamentals to expert-level architecture — become 
+                        the developer you've always wanted to be.
+                    </p>
+                    <div class="hero-actions">
+                        <button class="btn-primary btn-lg" onclick="navigateTo('problems')">
+                            <i class="fas fa-play"></i> Start Challenges
+                        </button>
+                        <button class="btn-outline btn-lg" onclick="navigateTo('about')">
+                            <i class="fas fa-compass"></i> Explore
+                        </button>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <span class="stat-number" data-count="500">0</span>
+                            <span class="stat-label">Challenges</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="stat-number" data-count="3">0</span>
+                            <span class="stat-label">Skill Levels</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="stat-number" data-count="15">0</span>
+                            <span class="stat-label">Categories</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="stat-number" data-count="100">0</span>
+                            <span class="stat-label">% Free</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="code-window">
+                        <div class="code-window-header">
+                            <div class="window-dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <span class="window-title">xcode.js</span>
+                        </div>
+                        <pre class="code-window-body"><code id="typing-code"></code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level Cards -->
+            <div class="section" id="levels-section">
+                <h2 class="section-title">Choose Your <span class="gradient-text">Level</span></h2>
+                <p class="section-subtitle">Pick your skill level and start solving challenges</p>
+                <div class="level-cards">
+                    <div class="level-card beginner" onclick="filterByLevel('beginner')">
+                        <div class="level-icon">🌱</div>
+                        <h3>Beginner</h3>
+                        <p class="level-count">200 Challenges</p>
+                        <p class="level-desc">HTML basics, CSS fundamentals, JS essentials. Perfect for those just starting their web dev journey.</p>
+                        <div class="level-tags">
+                            <span>HTML Elements</span>
+                            <span>CSS Selectors</span>
+                            <span>JS Variables</span>
+                            <span>DOM Basics</span>
+                        </div>
+                        <button class="btn-primary">Start Beginner <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <div class="level-card intermediate" onclick="filterByLevel('intermediate')">
+                        <div class="level-icon">🚀</div>
+                        <h3>Intermediate</h3>
+                        <p class="level-count">175 Challenges</p>
+                        <p class="level-desc">Flexbox, Grid, Async JS, APIs, Components. Level up your skills with real-world challenges.</p>
+                        <div class="level-tags">
+                            <span>Flexbox/Grid</span>
+                            <span>Async/Await</span>
+                            <span>APIs</span>
+                            <span>Components</span>
+                        </div>
+                        <button class="btn-primary">Start Intermediate <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <div class="level-card expert" onclick="filterByLevel('expert')">
+                        <div class="level-icon">👑</div>
+                        <h3>Expert</h3>
+                        <p class="level-count">125 Challenges</p>
+                        <p class="level-desc">Frameworks, Architecture, Algorithms, Systems Design. Prove you're a true web master.</p>
+                        <div class="level-tags">
+                            <span>Virtual DOM</span>
+                            <span>State Mgmt</span>
+                            <span>WebRTC</span>
+                            <span>WASM</span>
+                        </div>
+                        <button class="btn-primary">Start Expert <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="section features-section">
+                <h2 class="section-title">Why <span class="gradient-text">X Code</span>?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-laptop-code"></i></div>
+                        <h3>Built-in Code Editor</h3>
+                        <p>Write HTML, CSS & JavaScript with syntax highlighting, auto-completion, and instant preview.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-play-circle"></i></div>
+                        <h3>Instant Output</h3>
+                        <p>See your code output in real-time. Run and test before submitting your solution.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
+                        <h3>500+ Challenges</h3>
+                        <p>Carefully crafted questions from beginner to expert covering all web technologies.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3>Track Progress</h3>
+                        <p>Monitor your growth with stats, streaks, and achievement tracking.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                        <h3>Hints & Solutions</h3>
+                        <p>Stuck? Get hints to guide you. Learn from editorial solutions after solving.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                        <h3>Web Dev Focused</h3>
+                        <p>100% focused on web development. HTML, CSS, JavaScript — nothing else.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== PROBLEMS PAGE ====== -->
+        <section id="page-problems" class="page">
+            <div class="problems-container">
+                <!-- Filters -->
+                <div class="problems-header">
+                    <h2><i class="fas fa-code"></i> All Challenges</h2>
+                    <div class="problems-filters">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-input" placeholder="Search challenges..." oninput="handleSearch()">
+                        </div>
+                        <div class="filter-group">
+                            <select id="level-filter" onchange="applyFilters()">
+                                <option value="">All Levels</option>
+                                <option value="beginner">🟢 Beginner</option>
+                                <option value="intermediate">🟡 Intermediate</option>
+                                <option value="expert">🔴 Expert</option>
+                            </select>
+                            <select id="category-filter" onchange="applyFilters()">
+                                <option value="">All Categories</option>
+                                <option value="HTML">HTML</option>
+                                <option value="CSS">CSS</option>
+                                <option value="JavaScript">JavaScript</option>
+                            </select>
+                            <select id="status-filter" onchange="applyFilters()">
+                                <option value="">All Status</option>
+                                <option value="solved">✅ Solved</option>
+                                <option value="attempted">🔄 Attempted</option>
+                                <option value="unsolved">⬜ Unsolved</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="problems-stats">
+                        <span class="stat-pill beginner"><i class="fas fa-circle"></i> Beginner: <b>200</b></span>
+                        <span class="stat-pill intermediate"><i class="fas fa-circle"></i> Intermediate: <b>175</b></span>
+                        <span class="stat-pill expert"><i class="fas fa-circle"></i> Expert: <b>125</b></span>
+                        <span class="stat-pill total"><i class="fas fa-list"></i> Total: <b>500</b></span>
+                    </div>
+                </div>
+
+                <!-- Problems Table -->
+                <div class="problems-table-container">
+                    <table class="problems-table">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Difficulty</th>
+                                <th>Acceptance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="problems-tbody">
+                            <!-- Dynamically filled -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination" id="pagination">
+                    <!-- Dynamically filled -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== EDITOR PAGE ====== -->
+        <section id="page-editor" class="page">
+            <div class="editor-layout">
+                <!-- Left Panel - Problem Description -->
+                <div class="editor-left" id="editor-left">
+                    <div class="editor-tabs">
+                        <button class="editor-tab active" onclick="switchDescTab('description')">
+                            <i class="fas fa-file-alt"></i> Description
+                        </button>
+                        <button class="editor-tab" onclick="switchDescTab('hints')">
+                            <i class="fas fa-lightbulb"></i> Hints
+                        </button>
+                        <button class="editor-tab" onclick="switchDescTab('submissions')">
+                            <i class="fas fa-history"></i> Submissions
+                        </button>
+                    </div>
+                    <div class="desc-content" id="desc-content">
+                        <!-- Dynamically filled -->
+                    </div>
+                </div>
+
+                <!-- Resizer -->
+                <div class="editor-resizer" id="editor-resizer"></div>
+
+                <!-- Right Panel - Code Editor -->
+                <div class="editor-right">
+                    <div class="editor-toolbar">
+                        <div class="language-tabs">
+                            <button class="lang-tab active" onclick="switchLanguage('html')">
+                                <i class="fab fa-html5"></i> HTML
+                            </button>
+                            <button class="lang-tab" onclick="switchLanguage('css')">
+                                <i class="fab fa-css3-alt"></i> CSS
+                            </button>
+                            <button class="lang-tab" onclick="switchLanguage('javascript')">
+                                <i class="fab fa-js"></i> JavaScript
+                            </button>
+                        </div>
+                        <div class="editor-actions">
+                            <button class="btn-icon" onclick="resetCode()" title="Reset Code">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                            <button class="btn-icon" onclick="formatCode()" title="Format Code">
+                                <i class="fas fa-magic"></i>
+                            </button>
+                            <select id="font-size-select" onchange="changeFontSize(this.value)">
+                                <option value="12">12px</option>
+                                <option value="14" selected>14px</option>
+                                <option value="16">16px</option>
+                                <option value="18">18px</option>
+                                <option value="20">20px</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Code Editor Area -->
+                    <div class="code-editor-wrapper">
+                        <textarea id="code-editor"></textarea>
+                    </div>
+
+                    <!-- Output/Console -->
+                    <div class="output-panel">
+                        <div class="output-tabs">
+                            <button class="output-tab active" onclick="switchOutputTab('output')">
+                                <i class="fas fa-terminal"></i> Output
+                            </button>
+                            <button class="output-tab" onclick="switchOutputTab('preview')">
+                                <i class="fas fa-eye"></i> Preview
+                            </button>
+                            <button class="output-tab" onclick="switchOutputTab('testcases')">
+                                <i class="fas fa-check-circle"></i> Test Results
+                            </button>
+                        </div>
+                        <div class="output-content" id="output-content">
+                            <div class="output-placeholder">
+                                <i class="fas fa-play-circle"></i>
+                                <p>Click "Run Code" to see output</p>
+                            </div>
+                        </div>
+                        <iframe id="preview-frame" class="preview-frame" style="display:none;"></iframe>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="editor-bottom-actions">
+                        <button class="btn-run" onclick="runCode()">
+                            <i class="fas fa-play"></i> Run Code
+                        </button>
+                        <button class="btn-submit" onclick="submitCode()">
+                            <i class="fas fa-cloud-upload-alt"></i> Submit
+                        </button>
+                        <div class="nav-problems">
+                            <button class="btn-icon" onclick="prevProblem()" title="Previous">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="btn-icon" onclick="nextProblem()" title="Next">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== LEADERBOARD PAGE ====== -->
+        <section id="page-leaderboard" class="page">
+            <div class="leaderboard-container">
+                <h2 class="section-title"><i class="fas fa-trophy"></i> Leaderboard</h2>
+                <div class="leaderboard-podium">
+                    <div class="podium-item second">
+                        <div class="podium-avatar">🥈</div>
+                        <p class="podium-name">CodeNinja</p>
+                        <p class="podium-score">485 solved</p>
+                    </div>
+                    <div class="podium-item first">
+                        <div class="podium-avatar">🥇</div>
+                        <p class="podium-name">SHADOW</p>
+                        <p class="podium-score">500 solved</p>
+                    </div>
+                    <div class="podium-item third">
+                        <div class="podium-avatar">🥉</div>
+                        <p class="podium-name">WebWizard</p>
+                        <p class="podium-score">472 solved</p>
+                    </div>
+                </div>
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>User</th>
+                            <th>Solved</th>
+                            <th>Streak</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ====== ABOUT PAGE ====== -->
+        <section id="page-about" class="page">
+            <div class="about-container">
+                <div class="about-hero">
+                    <h1>About <span class="gradient-text">X Code</span></h1>
+                    <p>The ultimate platform for web developers to practice, learn, and master their craft.</p>
+                </div>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <h3>🎯 Our Mission</h3>
+                        <p>To make web development accessible and enjoyable through hands-on coding challenges. We believe the best way to learn is by doing.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>💡 500+ Challenges</h3>
+                        <p>Every challenge is carefully crafted to teach specific web development concepts, from basic HTML tags to building complete frameworks from scratch.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>🏗️ Built for the Web</h3>
+                        <p>Unlike generic coding platforms, X Code is 100% focused on web development — HTML, CSS, and JavaScript. This is where the web lives.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>👤 Created by SHADOW</h3>
+                        <p>X Code was built with passion by SHADOW — a developer who believes in learning by building. Every feature was crafted with love.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ============ AUTH MODAL ============ -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-content" style="max-width:440px;">
+            <div class="modal-header">
+                <h3 id="auth-modal-title">👋 Welcome</h3>
+                <button class="modal-close" onclick="closeAuthModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="auth-modal-body">
+                <!-- Dynamically filled by showAuthModal() -->
+            </div>
+        </div>
+    </div>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer" id="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <span class="logo-x">X</span><span class="logo-code">CODE</span>
+                    </a>
+                    <p>Master Web Development.<br>One Challenge at a Time.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Platform</h4>
+                        <a href="#" onclick="navigateTo('problems')">Challenges</a>
+                        <a href="#" onclick="navigateTo('leaderboard')">Leaderboard</a>
+                        <a href="#" onclick="navigateTo('about')">About</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Levels</h4>
+                        <a href="#" onclick="filterByLevel('beginner')">Beginner</a>
+                        <a href="#" onclick="filterByLevel('intermediate')">Intermediate</a>
+                        <a href="#" onclick="filterByLevel('expert')">Expert</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Resources</h4>
+                        <a href="#">Documentation</a>
+                        <a href="#">Blog</a>
+                        <a href="#">FAQ</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-social">
+                    <a href="https://github.com/SHADOW-VRX" target="_blank" class="social-link github" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/vivek-rai-08607b380" target="_blank" class="social-link linkedin" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" class="social-link instagram" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+                <div class="footer-credit">
+                    <p>Designed & Developed with <span class="heart">❤️</span> by <span class="creator-name">SHADOW</span></p>
+                    <p class="copyright">© 2024 X Code. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============ SUBMIT MODAL ============ -->
+    <div class="modal-overlay" id="submit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Submission Result</h3>
+                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Dynamically filled -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ BACK TO TOP ============ -->
+    <button class="back-to-top" id="back-to-top" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closetag.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/brace-fold.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/questions.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
